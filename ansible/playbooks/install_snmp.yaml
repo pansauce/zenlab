@@ -1,0 +1,10 @@
+---
+- name: Install and configure SNMP
+  hosts: "{{ host_group }}"
+  become: yes
+  vars: 
+    snmp_user: snmp
+    snmp_password: Boston77#
+    snmp_encryption: Boston77#Encrypted  
+  roles:
+     - sbaerlocher.snmp

@@ -1,0 +1,13 @@
+ - name: Patch OS on Host
+   hosts: "{{ host_group }}"
+   become: true
+   tasks:
+     - apt:
+         upgrade: yes
+         update_cache: yes
+         cache_valid_time: 86400
+       when: (ansible_distribution == "Debian" or ansible_distribution == "Ubuntu")
+     - yum:
+         update_cache: yes
+         state: latest
+       when: (ansible_distribution == "CentOS" or ansible_distribution == "RedHat")

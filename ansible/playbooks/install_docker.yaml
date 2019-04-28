@@ -1,0 +1,104 @@
+---
+- name: Install Docker on Ubuntu 18.04 (Bionic)
+  become: yes
+  hosts: "{{ host_group }}"
+  tasks:
+    - name: Install HTTPS Download Transport for APT 
+      apt:
+        name: apt-transport-https 
+
+    - name: Install Common Software Properties
+      apt:
+        name: software-properties-common
+
+    - name: Install CA Certificates
+      apt:
+        name: ca-certificates
+
+    - name: Add Docker's Official GPG Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present    
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+        update_cache: yes
+
+    - name: Update Cache and Install Docker
+      apt:
+        name: docker-ce
+        update_cache: yes
+      
+    - name: Install Docker Command Line
+      apt:
+        name: docker-ce-cli
+        update_cache: yes
+
+    - name: Install Containerd.io
+      apt:
+        name: containerd.io
+        update_cache: yes
+
+    - name: Enable the Docker Daemon
+      systemd: 
+        enabled: yes
+        name: docker
+
+    - name: Start the Docker Daemon
+      systemd: 
+        state: started
+        name: docker
+
+    - name: Enable the Firewall
+      systemd:
+        state: started
+        enabled: yes
+        name: ufw
+
+    - name: Open Port 7946 tcp
+      ufw: 
+        rule: allow
+        port: 7946
+        proto: tcp
+
+    - name: Open Port 7946 udp
+      ufw: 
+        rule: allow
+        port: 7946
+        proto: udp
+
+    - name: Open Port 4789 udp
+      ufw: 
+        rule: allow
+        port: 4789
+        proto: udp
+
+
+    - name: Open Port 2377 tcp
+      ufw: 
+        rule: allow
+        port: 2377
+        proto: tcp
+
+    - name: Open Port 2376 tcp
+      ufw: 
+        rule: allow
+        port: 2376
+        proto: tcp
+
+    - name: Open Port 80 tcp
+      ufw: 
+        rule: allow
+        port: 80
+        proto: tcp
+
+    - name: Reload Firewall
+      ufw:
+        state: reloaded
+
+    - name: Restart Docker
+      systemd:
+        state: restarted
+        name: docker

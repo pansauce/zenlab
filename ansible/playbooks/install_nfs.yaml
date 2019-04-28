@@ -1,0 +1,26 @@
+---
+- name: Install and Mount NFS Persistant Storage on Ubuntu 18.04 (Bionic)
+  hosts: "{{ host_group }}"
+  become: yes
+  tasks:
+    - name: Install NFS Common
+      apt: 
+        name: nfs-common
+
+    - name: Create NFS mount point
+      file:
+        path: /nfs
+        owner: root
+        group: root
+        state: directory
+        mode: 0755
+
+    - name: Install into /etc/fstab
+      mount:
+        backup: yes
+        boot: yes
+        fstype: nfs
+        path: /nfs/configuration
+        src: 10.0.30.100:configuration
+        state: mounted
+

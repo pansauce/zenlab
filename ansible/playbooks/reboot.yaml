@@ -1,0 +1,8 @@
+---
+- name: Reboot Target
+  hosts: "{{ host_group }}"
+  become: yes
+  tasks:
+    - reboot:
+        msg: "Automated Reboot Initiated..."
+   

@@ -1,0 +1,28 @@
+[primary_hosts]
+ns01 ansible_ssh_host=ns01.zenlab.org
+ldap01 ansible_ssh_host=ldap01.zenlab.org
+dwork01 ansible_ssh_host=dwork01.zenlab.org
+dwork02 ansible_ssh_host=dwork02.zenlab.org
+
+[secondary_hosts]
+ns02 ansible_ssh_host=ns02.zenlab.org
+ldap02 ansible_ssh_host=ldap02.zenlab.org
+dwork03 ansible_ssh_host=dwork03.zenlab.org
+dwork04 ansible_ssh_host=dwork04.zenlab.org
+
+[dock_managers]
+dman01 ansible_ssh_host=dman01.zenlab.org
+dman02 ansible_ssh_host=dman02.zenlab.org
+
+[dock_workers]
+dwork01 ansible_ssh_host=dwork01.zenlab.org
+dwork02 ansible_ssh_host=dwork02.zenlab.org
+dwork03 ansible_ssh_host=dwork03.zenlab.org
+dwork04 ansible_ssh_host=dwork04.zenlab.org
+
+[aux_hosts]
+ca ansible_ssh_host=ca.zenlab.org
+
+[all:vars]
+ansible_user=maweber
+ansible_python_interpreter=/usr/bin/python3

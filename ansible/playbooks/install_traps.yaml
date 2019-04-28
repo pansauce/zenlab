@@ -1,0 +1,10 @@
+---
+- name: Distribute and Install Traps
+  hosts: "{{ host_group }}"
+  tasks:
+     - name: Copy the Traps Installer to Target
+       copy: src=/home/maweber/zenlab/installers/ZenlabLinux.sh dest=/home/maweber mode=0755
+
+     - name: Execute the Installer
+       command: /home/maweber/ZenlabLinux.sh  --quiet --nox11
+       become: yes
